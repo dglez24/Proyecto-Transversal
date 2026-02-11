@@ -3,8 +3,33 @@
   <groupId>Proyecto_Transversal</groupId>
   <artifactId>Proyecto_Transversal</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  
+  <dependencies>
+  <!-- Source: https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.4.29.Final</version>
+    <scope>compile</scope>
+</dependency>
+<!-- Source: https://mvnrepository.com/artifact/org.netbeans.api/org-openide-awt -->
+<dependency>
+    <groupId>org.netbeans.api</groupId>
+    <artifactId>org-openide-awt</artifactId>
+    <version>RELEASE280</version>
+    <scope>compile</scope>
+</dependency>
+<!-- Source: https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-swing</artifactId>
+    <version>27-ea+3</version>
+    <scope>compile</scope>
+</dependency>
+  </dependencies>
+  
   <build>
-    <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
