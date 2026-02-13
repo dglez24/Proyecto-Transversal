@@ -21,7 +21,7 @@ public class VistaPrincipal extends JFrame {
 					VistaPrincipal frame = new VistaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); 
 				}
 			}
 		});
