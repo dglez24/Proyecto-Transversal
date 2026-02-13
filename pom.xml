@@ -10,7 +10,7 @@
 <dependency>
     <groupId>org.hibernate</groupId>
     <artifactId>hibernate-core</artifactId>
-    <version>5.4.29.Final</version>
+    <version>5.6.5.Final</version>
     <scope>compile</scope>
 </dependency>
 <!-- Source: https://mvnrepository.com/artifact/org.netbeans.api/org-openide-awt -->
@@ -27,6 +27,12 @@
     <version>27-ea+3</version>
     <scope>compile</scope>
 </dependency>
+
+<dependency>
+     <groupId>mysql</groupId>
+     <artifactId>mysql-connector-java</artifactId>
+     <version>8.0.18</version>
+    </dependency>
   </dependencies>
   
   <build>
