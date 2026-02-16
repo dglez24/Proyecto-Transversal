@@ -18,7 +18,7 @@ import java.awt.Font;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
-public class Vistaprincipal extends JFrame {
+public class VistaPrincipal extends JFrame {
 
 	public static final long serialVersionUID = 1L;
 	public JPanel contentPane;
@@ -153,7 +153,7 @@ public class Vistaprincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Vistaprincipal frame = new Vistaprincipal();
+					VistaPrincipal frame = new VistaPrincipal();
 	                Funcionalidad funcion = new Funcionalidad(frame);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -163,7 +163,7 @@ public class Vistaprincipal extends JFrame {
 		});
 	}
 
-	public Vistaprincipal() {
+	public VistaPrincipal() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         double scaleX = screen.width / 1400.0;
         double scaleY = screen.height / 800.0;
