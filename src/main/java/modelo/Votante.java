@@ -10,8 +10,8 @@ public class Votante extends Thread {
 private int rangoEdad;
 private String comunidad;
 private int voto;
-private String partidoVotado;
-public Votante(String comunidad,int rangoEdad) {
+private String  partidoVotado;
+public Votante(String comunidad,int rangoEdad, SessionFactory factory) {
 	this.comunidad=comunidad;
 	this.rangoEdad=rangoEdad;
 }
@@ -49,9 +49,7 @@ public void run() {
             else partidoVotado = "Z";
             break;
     }
-    
-    // Opcional: imprimir para ver que el hilo está trabajando
-    // System.out.println("Hilo de " + comunidad + " (Rango " + rangoEdad + ") votó a: " + partidoVotado);
+
 }
 private static synchronized void actualizarVotoSincronizado(String partido, String comunidad, SessionFactory factory) {
     Session session = factory.openSession();

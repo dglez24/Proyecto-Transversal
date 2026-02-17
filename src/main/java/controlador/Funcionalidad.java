@@ -5,6 +5,8 @@ import vista.VistaPrincipal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import modelo.Votante;
 import vista.VistaPrincipal;
 // Importamos las clases de la carpeta persistencias
 import persistencias.ComunidadPartido; 
@@ -34,40 +36,44 @@ public class Funcionalidad {
             
             for (PorcentajesRangoedad cp : lista) {
 
-            	
             	String comunidad = cp.getNombreComunidad();
-            	int tramoMenor=cp.getRango19();
-            	int tramoMenor2=cp.getRango1017();
                 int tramoEdad = cp.getRango1825(); 
                 int tramoEdad2 = cp.getRango2640();
                 int tramoEdad3 = cp.getRango4165();
                 int tramoEdad4 = cp.getRangoMas66();
-                int habitantes=(int) Math.ceil((double) cp.getTotalHabitantes() / 100000);
-                if(habitantes<100000) {
-                	habitantes=5;
+                int habitantes=cp.getTotalHabitantes();
+                if(habitantes<500000) {
+                	lanzarHiloManual(comunidad, 1, 1);
+                	lanzarHiloManual(comunidad, 2, 2);
+                	lanzarHiloManual(comunidad, 3, 1);
+                	lanzarHiloManual(comunidad, 4, 1);
                 }else {
-                	habitantes=(int) Math.ceil((double)habitantes/100000);
+                	lanzarHilosPorTramo(comunidad, habitantes, cp.getRango1825(), 1);
+                    lanzarHilosPorTramo(comunidad, habitantes, cp.getRango2640(), 2); 
+                    lanzarHilosPorTramo(comunidad, habitantes, cp.getRango4165(), 3); 
+                    lanzarHilosPorTramo(comunidad, habitantes, cp.getRangoMas66(), 4);
                 }
-                int aleatorio=(int)(Math.random()*101);
-                
-                for(int i=0;i<habitantes;i++) {
-                	if(aleatorio>tramoMenor+tramoMenor2) {
-                    	
-                    	
-                    	
-                    	
-                    }else {
-                    	System.out.println("Voto Excluido Menor de edad");
-                    }
-                }
-                
-                
-              
-            	
-            	
             }
         } finally {
             session.close();
         }
+}
+private void lanzarHilosPorTramo(String comunidad, long total, int porcentajeTramo, int idRango) {
+     
+        double habitantesEnTramo = (total * porcentajeTramo) / 100.0;
+        int numHilos = (int) Math.ceil(habitantesEnTramo / 100000.0);
+
+        for (int i = 0; i < numHilos; i++) {
+            Votante v = new Votante(comunidad, idRango, this.factory);
+            v.start();
+        }
+}
+public void lanzarHiloManual(String comunidad, int idRango,int rep) {
+
+    for (int i = 0; i < rep; i++) {
+        Votante v = new Votante(comunidad, idRango, this.factory);
+        v.start();
     }
 }
+}
+
