@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17 feb 2026, 19:01:21 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="censo_por_comunidades" name="persistencias.PartidoRangoEdad" optimistic-lock="none" table="partido_rango_edad">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="persistencias.ComunidadPartido" fetch="select" name="comunidadPartido">
+            <column name="ID_COMUNIDAD" not-null="true">
+                <comment>Relación con la comunidad</comment>
+            </column>
+        </many-to-one>
+        <property name="partido" type="string">
+            <column length="20" name="PARTIDO" not-null="true">
+                <comment>nombre del partido</comment>
+            </column>
+        </property>
+        <property name="rango1" type="int">
+            <column name="RANGO1" not-null="true">
+                <comment>votos rango 1</comment>
+            </column>
+        </property>
+        <property name="rango2" type="int">
+            <column name="RANGO2" not-null="true">
+                <comment>votos rango 2</comment>
+            </column>
+        </property>
+        <property name="rango3" type="int">
+            <column name="RANGO3" not-null="true">
+                <comment>votos rango 3</comment>
+            </column>
+        </property>
+        <property name="rango4" type="int">
+            <column name="RANGO4" not-null="true">
+                <comment>votos rango 4</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
