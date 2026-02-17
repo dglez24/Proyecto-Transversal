@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 17 feb 2026, 19:01:21 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="censo_por_comunidades" name="persistencias.ComunidadPartido" optimistic-lock="none" table="comunidad_partido">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID"/>
+            <generator class="identity"/>
+        </id>
+        <property name="comunidadAutonoma" type="string">
+            <column length="20" name="COMUNIDAD_AUTONOMA" not-null="true">
+                <comment>nombre de la comunidad Autonoma</comment>
+            </column>
+        </property>
+        <property name="votosw" type="int">
+            <column name="VOTOSW" not-null="true">
+                <comment>votos del partido w</comment>
+            </column>
+        </property>
+        <property name="votosx" type="int">
+            <column name="VOTOSX" not-null="true">
+                <comment>votos del partido x</comment>
+            </column>
+        </property>
+        <property name="votosy" type="int">
+            <column name="VOTOSY" not-null="true">
+                <comment>votos del partido y</comment>
+            </column>
+        </property>
+        <property name="votosz" type="int">
+            <column name="VOTOSZ" not-null="true">
+                <comment>votos del partido z</comment>
+            </column>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="partidoRangoEdads" table="partido_rango_edad">
+            <key>
+                <column name="ID_COMUNIDAD" not-null="true">
+                    <comment>Relación con la comunidad</comment>
+                </column>
+            </key>
+            <one-to-many class="persistencias.PartidoRangoEdad"/>
+        </set>
+    </class>
+</hibernate-mapping>
