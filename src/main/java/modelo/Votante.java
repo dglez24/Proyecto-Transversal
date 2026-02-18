@@ -3,23 +3,26 @@ package modelo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import persistencias.ComunidadPartido;
+import persistencias.PartidoRangoEdad;
 
 public class Votante extends Thread {
 private int rangoEdad;
 private String comunidad;
 private int voto;
+private SessionFactory factory;
 private String  partidoVotado;
 public Votante(String comunidad,int rangoEdad, SessionFactory factory) {
 	this.comunidad=comunidad;
 	this.rangoEdad=rangoEdad;
-}
+	this.factory = factory;
+	}
 public void run() {
 	
 	int aleatorio = (int) (Math.random() * 100) + 1;
 
-    // 2. Determinar el voto según el rango de edad
     switch (rangoEdad) {
         case 1: // 18 a 25 años
             if (aleatorio <= 30) partidoVotado = "X";
@@ -48,18 +51,19 @@ public void run() {
             else if (aleatorio <= 95) partidoVotado = "W";
             else partidoVotado = "Z";
             break;
+           
     }
-
+        actualizarVotoSincronizado(partidoVotado, comunidad,rangoEdad, this.factory);
 }
-private static synchronized void actualizarVotoSincronizado(String partido, String comunidad, SessionFactory factory) {
-    Session session = factory.openSession();
+private static synchronized void actualizarVotoSincronizado(String partido, String comunidad,int rango, SessionFactory factory) {
+	Session session = factory.openSession();
     Transaction tx = null;
     try {
-        tx = session.beginTransaction();
+    	tx = session.beginTransaction();
 
-        // Buscamos la comunidad
+        
         ComunidadPartido cpVotos = session.createQuery(
-            "from ComunidadPartido where nombreComunidad = :nom", ComunidadPartido.class)
+            "from ComunidadPartido where comunidadAutonoma = :nom", ComunidadPartido.class)
             .setParameter("nom", comunidad)
             .uniqueResult();
 
@@ -71,14 +75,33 @@ private static synchronized void actualizarVotoSincronizado(String partido, Stri
                 case "Z": cpVotos.setVotosz(cpVotos.getVotosz() + 1); break;
             }
             session.update(cpVotos);
-        }
+            
+            
+            String nombrePartidoDB = "Partido" + partido; 
+
+            PartidoRangoEdad pre = session.createQuery(
+                "from PartidoRangoEdad where comunidadPartido.id = :cpId and partido = :part", 
+                PartidoRangoEdad.class)
+                .setParameter("cpId", cpVotos.getId())
+                .setParameter("part", nombrePartidoDB) 
+                .uniqueResult();
+
+            if (pre != null) {
+                if (rango == 1) pre.setRango1(pre.getRango1() + 1);
+                else if (rango == 2) pre.setRango2(pre.getRango2() + 1);
+                else if (rango == 3) pre.setRango3(pre.getRango3() + 1);
+                else if (rango == 4) pre.setRango4(pre.getRango4() + 1);
+                
+                session.update(pre);
+            }
         tx.commit();
-    } catch (Exception e) {
+        } 
+    }catch (Exception e) {
         if (tx != null) tx.rollback();
         e.printStackTrace();
     } finally {
         session.close();
     }
-}
-}
 
+}
+}
